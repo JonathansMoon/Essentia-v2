@@ -5,15 +5,18 @@ namespace App\Http\Controllers;
 use App\ApiMessages\ApiMessages;
 use App\Http\Requests\PatientRequest;
 use App\Models\Patient;
+use App\Services\PatientService;
 use Illuminate\Http\Request;
 
 class PatientController extends Controller
 {
     private $patient;
+    private $patientService;
 
-    public function __construct(Patient $patient)
+    public function __construct(Patient $patient, PatientService $patientService)
     {
         $this->patient = $patient;
+        $this->patientService = $patientService;
     }
 
     public function index()
@@ -24,20 +27,8 @@ class PatientController extends Controller
 
     public function store(PatientRequest $request)
     {
-        $patient = $request->all();
-
-        try {
-            $this->patient->create($patient);
-
-            return response()->json([
-                'data'  => [
-                    'message'   => 'Patient create success!'
-                ]
-            ], 201);
-        } catch (\Exception $e) {
-            $message = new ApiMessages($e->getMessage());
-            return response()->json($message->getMessage(), 401);
-        }
+        $data = $this->patientService->create($request->all());
+        return response()->json($data);
     }
 
     public function show($id)
@@ -48,38 +39,15 @@ class PatientController extends Controller
 
     public function update(Request $request, $id)
     {
-        try {
-            $patient = $this->patient->findOrFail($id);
-            $data = $request->all();
 
-            $patient->update($data);
-
-            return response()->json([
-                'data'  => [
-                    'message'   => 'Patient update success!'
-                ]
-            ], 200);
-        } catch (\Exception $e) {
-            $message = new ApiMessages($e->getMessage());
-            return response()->json($message->getMessage(), 401);
-        }
+        $data = $this->patientService->update($request->all(), $id);
+        return response()->json($data);
     }
 
 
     public function destroy($id)
     {
-        try {
-            $patient = $this->patient->findOrFail($id);
-            $patient->delete();
-
-            return response()->json([
-                'data' => [
-                    'message' => 'The patient' . $patient->name . ' delete success!'
-                ]
-            ], 200);
-        } catch (\Exception $e) {
-            $message = new ApiMessages($e->getMessage());
-            return response()->json($message->getMessage(), 401);
-        }
+        $data = $this->patientService->destroy($id);
+        return response()->json($data);
     }
 }

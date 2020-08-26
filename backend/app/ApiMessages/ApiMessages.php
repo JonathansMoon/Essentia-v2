@@ -4,7 +4,7 @@ namespace App\ApiMessages;
 
 class ApiMessages
 {
-    private $messages = [];
+    private $message = [];
 
     public function __construct(string $message, array $errors = [])
     {
