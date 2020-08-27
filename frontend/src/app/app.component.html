@@ -1,7 +1,7 @@
 <div id="app">
-  <nav class="navbar navbar-expand-md navbar-dark shadow-sm">
+  <nav class="navbar bg-dark navbar-expand-md navbar-dark shadow-sm">
     <div class="container">
-      <a class="navbar-brand text-dark" href="">Essentia</a>
+      <img src="assets/images/essentia.png" alt="">
       <button
         class="navbar-toggler"
         type="button"
@@ -22,59 +22,8 @@
   </nav>
 
   <main class="py-4">
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-md-10">
-          <div class="card border-0 shadow-lg p-3 mb-5 bg-white rounded">
-            <div class="create-buttom">
-              <a href="" class="btn btn-light shadow">Novo Cliente</a>
-            </div>
-            <div class="card-body">
-              <div
-                class="alert alert-success alert-dismissible fade show"
-                role="alert"
-              ></div>
-
-              <table class="table" id="myTable">
-                <thead class="thead-purple">
-                  <tr>
-                    <th style="text-align: center">#</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Phone</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td scope="row">
-                      <div class="circle"><img src="" /></div>
-                    </td>
-                    <td scope="row"></td>
-                    <td></td>
-                    <td></td>
-                    <td class="td-action">
-                      <form action="" method="POST">
-                        <a href="" class="btn btn-sm btn-outline-success">
-                          <i class="fas fa-eye" aria-hidden="true">v</i>
-                        </a>
-                        <a href="" class="btn btn-sm btn-outline-primary">
-                          <i class="fa fa-edit" aria-hidden="true">e</i>
-                        </a>
-                        <a href="" class="btn btn-sm btn-outline-danger">
-                          <i class="fa fa-trash" aria-hidden="true">d</i>
-                        </a>
-                      </form>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <router-outlet></router-outlet>
   </main>
 </div>
 
-<router-outlet></router-outlet>
+

@@ -1,0 +1,7 @@
+table .actions {
+  min-width: 120px;
+}
+
+td a {
+  margin-left: 3px;
+}

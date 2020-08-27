@@ -1,1 +1,54 @@
-<p>patients works!</p>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-11">
+      <div class="card border-0 shadow-lg p-3 mb-5 rounded">
+        <div class="create-buttom">
+          <a href="" class="btn btn-light shadow">Novo Cliente</a>
+        </div>
+        <div class="card-body">
+          <!-- <div
+            class="alert alert-success alert-dismissible fade show"
+            role="alert"
+          ></div> -->
+
+          <table *ngIf="responsePatients" class="table" id="myTable">
+            <thead class="thead-dark">
+              <tr>
+                <th>#</th>
+                <th>name</th>
+                <th>email</th>
+                <th>gender</th>
+                <th>telephone</th>
+                <!-- <th>birth date</th>
+                <th>last attendance</th> -->
+                <th class="actions"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let patient of responsePatients.data; let enumerate = index">
+                <td>{{enumerate + 1}}</td>
+                <td>{{patient.name}}</td>
+                <td>{{patient.email}}</td>
+                <td>{{patient.gender}}</td>
+                <td>{{patient.telephone}}</td>
+                <!-- <td>{{patient.birthDate}}</td>
+                <td>{{patient.lastAttendance}}</td> -->
+                <td>
+                  <a href="" class="btn btn-sm btn-primary">
+                    <i-bs name="eye-fill" ></i-bs>
+                  </a>
+                  <a href="" class="btn btn-sm btn-success">
+                    <i-bs name="pencil-fill" ></i-bs>
+                  </a>
+                  <a href="" class="btn btn-sm btn-danger">
+                    <i-bs name="trash2-fill" ></i-bs>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
