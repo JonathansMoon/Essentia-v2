@@ -8,20 +8,27 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { PatientService } from './patients/patient.service';
 import { PatientsComponent } from './patients/patients.component';
 import { NgxBootstrapIconsModule } from 'ngx-bootstrap-icons';
-import { Alarm, AlarmFill, EyeFill, PencilFill, Trash2Fill } from 'ngx-bootstrap-icons';
+import {
+  Alarm,
+  AlarmFill,
+  EyeFill,
+  PencilFill,
+  Trash2Fill,
+} from 'ngx-bootstrap-icons';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { NgxMaskModule, IConfig } from 'ngx-mask'
+import { NgxMaskModule, IConfig } from 'ngx-mask';
+import { ModelFormComponent } from './patients/model-form/model-form.component';
 
 const icons = {
   Alarm,
   AlarmFill,
   EyeFill,
   PencilFill,
-  Trash2Fill
+  Trash2Fill,
 };
 
 @NgModule({
-  declarations: [AppComponent, PatientsComponent],
+  declarations: [AppComponent, PatientsComponent, ModelFormComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -29,7 +36,7 @@ const icons = {
     NgxBootstrapIconsModule.pick(icons),
     ModalModule.forRoot(),
     ReactiveFormsModule,
-    NgxMaskModule.forRoot()
+    NgxMaskModule.forRoot(),
   ],
   providers: [HttpClient, PatientService],
   bootstrap: [AppComponent],

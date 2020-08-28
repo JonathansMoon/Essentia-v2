@@ -20,7 +20,7 @@ class CreatePatientsTable extends Migration
             $table->string('gender', 50);
             $table->string('telephone', 50)->nullable();
             $table->date('birthDate')->nullable();
-            $table->date('lastAttendance')->nullable();
+            $table->dateTime('lastAttendance')->nullable();
             $table->timestamps();
         });
     }

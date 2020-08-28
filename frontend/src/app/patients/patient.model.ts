@@ -1,4 +1,3 @@
-
 export interface Patient {
   id: number;
   name: string;
@@ -22,4 +21,13 @@ export interface ResponsePatients {
   prev_page_url?: any;
   to: number;
   total: number;
+}
+
+export interface ResponseCreate {
+  data: Messages;
+}
+
+export interface Messages {
+  message: string;
+  error: string;
 }
