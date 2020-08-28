@@ -3,14 +3,9 @@
     <div class="col-md-11">
       <div class="card border-0 shadow-lg p-3 mb-5 rounded">
         <div class="create-buttom">
-          <a href="" class="btn btn-light shadow">Novo Cliente</a>
+          <button href="" class="btn btn-primary shadow" (click)="openModal(template)">Novo Cliente</button>
         </div>
         <div class="card-body">
-          <!-- <div
-            class="alert alert-success alert-dismissible fade show"
-            role="alert"
-          ></div> -->
-
           <table *ngIf="responsePatients" class="table" id="myTable">
             <thead class="thead-dark">
               <tr>
@@ -35,13 +30,13 @@
                 <td>{{patient.lastAttendance}}</td> -->
                 <td>
                   <a href="" class="btn btn-sm btn-primary">
-                    <i-bs name="eye-fill" ></i-bs>
+                    <i-bs name="eye-fill"></i-bs>
                   </a>
                   <a href="" class="btn btn-sm btn-success">
-                    <i-bs name="pencil-fill" ></i-bs>
+                    <i-bs name="pencil-fill"></i-bs>
                   </a>
                   <a href="" class="btn btn-sm btn-danger">
-                    <i-bs name="trash2-fill" ></i-bs>
+                    <i-bs name="trash2-fill"></i-bs>
                   </a>
                 </td>
               </tr>
@@ -52,3 +47,100 @@
     </div>
   </div>
 </div>
+
+
+<!--CONTEUDO DA JANELA MODAL DE INSERIR E EDITAR -->
+<ng-template #template>
+  <div class="modal-header">
+    <h5 class="modal-title">Insert</h5>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+
+  <form [formGroup]="form">
+    <div class="form-group">
+      <label for="name">Nome</label>
+      <input type="text" id="name" class="form-control" placeholder="Seu nome" formControlName="name" [ngClass]="isInvalid('name')"/>
+      <div class="invalid-feedback" *ngIf="name.errors?.required">
+        Por favor informe um nome valido.
+      </div>
+      <div class="invalid-feedback" *ngIf="name.errors?.minlength">
+        Por favor informe mais de 3 caracteres.
+      </div>
+      <div class="invalid-feedback" *ngIf="name.errors?.maxlength">
+        Por favor, nome excede o limite de caracteres.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" class="form-control" placeholder="Seu email" formControlName="email" [ngClass]="optionalInvalid('email')  + ' ' +  isInvalid('email')"/>
+      <div class="text-warning small" *ngIf="optionalInvalid('email')">
+        O telefone é opcional, mas está vazio.
+      </div>
+      <div class="invalid-feedback" *ngIf="email.errors?.email">
+        Por favor inform um email válido.
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <div class="form-group">
+          <label for="telephone">Telefone</label>
+          <input type="text" mask="(00) 0000-0000||(00) 00000-0000" class="form-control" name="telephone" formControlName="telephone" [ngClass]="optionalInvalid('telephone')  + ' ' +  isInvalid('telephone')" placeholder="Seu telefone">
+          <div class="text-warning small" *ngIf="optionalInvalid('telephone')">
+            O telefone é opcional, mas está vazio.
+          </div>
+          <div class="invalid-feedback" *ngIf="telephone.errors?.minlength">
+            O telefone deve possuir no minimo 10 caracteres.
+          </div>
+          <div class="invalid-feedback" *ngIf="telephone.errors?.maxlength">
+            O telefone deve possuir no máximo 11 caracteres.
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="form-group">
+          <label for="gender">Sexo</label>
+          <select class="form-control" name="gender">
+            <option selected>M</option>
+            <option>F</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <div class="form-group">
+          <label for="birthDate">Data de Nascimento</label>
+          <input type="date" class="form-control" name="birthDate" formControlName="birthDate" [ngClass]="isInvalid('birthDate')" placeholder="Sua Data de Nascimento">
+          <div class="invalid-feedback" *ngIf="birthDate.errors?.required">
+            Por favor informe uma data.
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="form-group">
+          <label for="lastAttendance">Data da Última Visita</label>
+          <input type="datetime-local" class="form-control" name="lastAttendance" formControlName="lastAttendance" [ngClass]="isInvalid('lastAttendance')" placeholder="Data da última visita">
+          <div class="invalid-feedback" *ngIf="lastAttendance.errors?.required">
+            Por favor informe uma data.
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </form>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-primary" (click)="onSubmit()">Salvar</button>
+    <button type="button" class="btn btn-light" (click)="onCancel()">Cancelar</button>
+  </div>
+</ng-template>
