@@ -13,7 +13,7 @@
                 <button
                   href=""
                   class="btn btn-primary shadow"
-                  (click)="openFormModal()"
+                  (click)="childForm.openFormModal()"
                 >
                   Novo Cliente
                 </button>
@@ -30,8 +30,6 @@
                 <th>email</th>
                 <th>gender</th>
                 <th>telephone</th>
-                <!-- <th>birth date</th>
-                <th>last attendance</th> -->
                 <th class="actions"></th>
               </tr>
             </thead>
@@ -46,18 +44,13 @@
                 <td>{{ patient.name }}</td>
                 <td>{{ patient.email }}</td>
                 <td>{{ patient.gender }}</td>
-                <td>{{ patient.telephone }}</td>
-                <!-- <td>{{patient.birthDate}}</td>
-                <td>{{patient.lastAttendance}}</td> -->
+                <td>{{ patient.telephone | phone }}</td>
                 <td>
-                  <button href="" class="btn btn-sm btn-info" (click)="[openViewModal(patient, templateView)]">
+                  <button href="" class="btn btn-sm btn-info" (click)="[childView.openViewModal(patient)]">
                     <i-bs name="eye-fill"></i-bs>
                   </button>
-                  <button href="" class="btn btn-sm btn-primary" (click)="[childForm.onEdit(patient), openFormModal()]">
+                  <button href="" class="btn btn-sm btn-primary" (click)="[childForm.updateForm(patient)]">
                     <i-bs name="pencil-fill"></i-bs>
-                  </button>
-                  <button href="" class="btn btn-sm btn-danger">
-                    <i-bs name="trash2-fill"></i-bs>
                   </button>
                 </td>
               </tr>
@@ -69,32 +62,8 @@
   </div>
 </div>
 
-<app-model-form [onHide]="modalRef" #childForm></app-model-form>
+<app-model-form #childForm></app-model-form>
 
-<!--CONTEUDO DA JANELA MODAL VIEW -->
-<ng-template #templateView>
-  <div class="modal-header bg-primary">
-    <h5 class="modal-title text-white">Detalhes do Paciente</h5>
-    <button
-      type="button"
-      class="close pull-right"
-      aria-label="Close"
-      (click)="modalRef.hide()"
-    >
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-
-  <div class="modal-body">
-    <ul class="list-group">
-      <li class="list-group-item">Nome: {{initialState.name}}</li>
-      <li class="list-group-item">Email: {{initialState.email}}</li>
-      <li class="list-group-item">Sexo: {{initialState.gender}}</li>
-      <li class="list-group-item">Telefone: {{initialState.telephone}}</li>
-      <li class="list-group-item">Data de Nascimento: {{initialState.birthDate}}</li>
-      <li class="list-group-item">Data da última Visita: {{initialState.lastAttendance}}</li>
-    </ul>
-  </div>
-</ng-template>
+<app-modal-view #childView></app-modal-view>
 
 

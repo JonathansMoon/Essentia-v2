@@ -22,6 +22,7 @@ import { ModelFormComponent } from './patients/model-form/model-form.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { ModalViewComponent } from './patients/modal-view/modal-view.component';
+import { PhonePipe } from './phone.pipe';
 
 const icons = {
   Alarm,
@@ -32,7 +33,7 @@ const icons = {
 };
 
 @NgModule({
-  declarations: [AppComponent, PatientsComponent, ModelFormComponent, ModalViewComponent],
+  declarations: [AppComponent, PatientsComponent, ModelFormComponent, ModalViewComponent, PhonePipe],
   imports: [
     BrowserModule,
     AppRoutingModule,

@@ -1,28 +1,31 @@
-import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, TemplateRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ResponsePatients } from '../patient.model';
-import { BsModalRef } from 'ngx-bootstrap/modal';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { PatientService } from '../patient.service';
-import { formatDate } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-model-form',
   templateUrl: './model-form.component.html',
   styleUrls: ['./model-form.component.css'],
+  providers: [DatePipe]
 })
 export class ModelFormComponent implements OnInit {
   form: FormGroup;
   submitted = false;
   messages:string;
   responsePatients: ResponsePatients;
-
-  @Input() onHide: string;
+  modalRef: BsModalRef;
+  initialValue:any;
 
   constructor(
     private formBuilder: FormBuilder,
     private service: PatientService,
     private toastr: ToastrService,
+    private modalService: BsModalService,
+    private datePipe: DatePipe
   ) {}
 
   ngOnInit(): void {
@@ -52,31 +55,6 @@ export class ModelFormComponent implements OnInit {
     });
   }
 
-
-  onEdit(patient) {
-    const patientId$ = this.service.getById(patient.id);
-
-    patientId$.subscribe(
-      patientId => {
-        this.updateForm(patientId)
-      }
-    )
-  }
-
-  updateForm(patient): void {
-    this.form.patchValue({
-      id: patient.id,
-      name: patient.name,
-      email: patient.email,
-      gender: patient.gender,
-      telephone: patient.telephone,
-      birthDate: patient.birthDate,
-      lastAttendance: patient.lastAttendance,
-    })
-    // alert(this.form.value.name);
-
-  }
-
   get name() {
     return this.form.get('name');
   }
@@ -95,6 +73,31 @@ export class ModelFormComponent implements OnInit {
 
   get lastAttendance() {
     return this.form.get('lastAttendance');
+  }
+
+  @ViewChild('templateForm')
+  private templateFormTpl: TemplateRef<any>;
+
+  openFormModal() {
+    this.form.reset();
+    this.modalRef = this.modalService.show(this.templateFormTpl);
+  }
+
+  updateForm(patient) {
+
+    this.modalRef = this.modalService.show(this.templateFormTpl);
+
+    this.modalRef.content = this.form;
+
+    this.modalRef.content.patchValue({
+      id: patient.id,
+      name: patient.name,
+      email: patient.email,
+      gender: patient.gender,
+      telephone: patient.telephone,
+      birthDate: patient.birthDate,
+      lastAttendance: this.datePipe.transform(patient.lastAttendance, 'yyyy-MM-ddThh:mm'),
+    });
   }
 
   hasErrors(field: string) {
@@ -116,36 +119,38 @@ export class ModelFormComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-    console.log(this.form.value);
+
     if (this.form.valid) {
-      const formatdate = 'yyyy-MM-dd';
-      const locale = 'en-US';
-      this.form.value.birthDate = formatDate(
-        this.form.value.birthDate,
-        formatdate,
-        locale
-      );
 
-      const formatDateTime = 'yyyy-MM-dd HH:mm:ss';
-      this.form.value.lastAttendance = formatDate(
-        this.form.value.lastAttendance,
-        formatDateTime,
-        locale
-      );
+      this.form.value.birthDate = this.datePipe.transform(this.form.value.birthDate, 'yyyy-MM-dd');
 
-      this.service.createPatient(this.form.value).subscribe(
-        (success) => this.showMessageSuccess(),
+      this.form.value.lastAttendance = this.datePipe.transform(this.form.value.lastAttendance, 'yyyy-MM-dd HH:mm:ss');
 
-        (error) => this.showMessageError(Object.keys(error.error.errors).map(function(item){
-          return error.error.errors[item]
-         }),
-      ));
+      if (this.form.value.id !== null) {
+        this.service.updatePatient(this.form.value).subscribe(
+          (success) => this.showMessageSuccess(`Paciente ${this.form.value.name} atualizado com sucesso!`),
+
+          (error) => this.showMessageError(Object.keys(error.error.errors).map(function(item){
+            return error.error.errors[item]
+           }),
+        ));
+      }
+
+      if (this.form.value.id === null) {
+        this.service.createPatient(this.form.value).subscribe(
+          (success) => this.showMessageSuccess('Paciente criado com sucesso!'),
+
+          (error) => this.showMessageError(Object.keys(error.error.errors).map(function(item){
+            return error.error.errors[item]
+           }),
+        ));
+      }
     }
   }
 
-  showMessageSuccess() {
-    this.toastr.success('Paciente criado com sucesso!');
-    this.onHide;
+  showMessageSuccess(message) {
+    this.toastr.success(message);
+    this.modalRef.hide();
   }
 
   showMessageError(message) {
@@ -154,6 +159,6 @@ export class ModelFormComponent implements OnInit {
 
   onCancel() {
     this.submitted = false;
-    this.form.reset();
+    this.modalRef.hide();
   }
 }

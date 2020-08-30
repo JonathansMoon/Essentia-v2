@@ -1,0 +1,25 @@
+<!--CONTEUDO DA JANELA MODAL VIEW -->
+<ng-template #templateView>
+  <div class="modal-header bg-primary">
+    <h5 class="modal-title text-white">Detalhes do Paciente</h5>
+    <button
+      type="button"
+      class="close pull-right"
+      aria-label="Close"
+      (click)="modalRef.hide()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <ul class="list-group">
+      <li class="list-group-item">Nome: {{initialState.name}}</li>
+      <li class="list-group-item">Email: {{initialState.email}}</li>
+      <li class="list-group-item">Sexo: {{initialState.gender}}</li>
+      <li class="list-group-item">Telefone: {{initialState.telephone | phone}}</li>
+      <li class="list-group-item">Data de Nascimento: {{initialState.birthDate}}</li>
+      <li class="list-group-item">Data da última Visita: {{initialState.lastAttendance}}</li>
+    </ul>
+  </div>
+</ng-template>
