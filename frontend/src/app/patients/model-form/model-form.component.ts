@@ -1,9 +1,10 @@
-import { Component, OnInit, Input, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ResponsePatients } from '../patient.model';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { PatientService } from '../patient.service';
-import { DatePipe, formatDate } from '@angular/common';
+import { formatDate } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-model-form',
@@ -13,16 +14,20 @@ import { DatePipe, formatDate } from '@angular/common';
 export class ModelFormComponent implements OnInit {
   form: FormGroup;
   submitted = false;
+  messages:string;
   responsePatients: ResponsePatients;
-  @Input() onHide: BsModalRef;
+
+  @Input() onHide: string;
 
   constructor(
     private formBuilder: FormBuilder,
-    private service: PatientService
+    private service: PatientService,
+    private toastr: ToastrService,
   ) {}
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
+      id: [null],
       name: [
         null,
         [
@@ -45,6 +50,31 @@ export class ModelFormComponent implements OnInit {
       birthDate: [null, Validators.compose([Validators.required])],
       lastAttendance: [null, Validators.compose([Validators.required])],
     });
+  }
+
+
+  onEdit(patient) {
+    const patientId$ = this.service.getById(patient.id);
+
+    patientId$.subscribe(
+      patientId => {
+        this.updateForm(patientId)
+      }
+    )
+  }
+
+  updateForm(patient): void {
+    this.form.patchValue({
+      id: patient.id,
+      name: patient.name,
+      email: patient.email,
+      gender: patient.gender,
+      telephone: patient.telephone,
+      birthDate: patient.birthDate,
+      lastAttendance: patient.lastAttendance,
+    })
+    // alert(this.form.value.name);
+
   }
 
   get name() {
@@ -104,11 +134,22 @@ export class ModelFormComponent implements OnInit {
       );
 
       this.service.createPatient(this.form.value).subscribe(
-        (success) => alert('Paciente criado com sucesso!'),
-        (error) => console.error(error.error.errors),
-        () => console.log('request completo')
-      );
+        (success) => this.showMessageSuccess(),
+
+        (error) => this.showMessageError(Object.keys(error.error.errors).map(function(item){
+          return error.error.errors[item]
+         }),
+      ));
     }
+  }
+
+  showMessageSuccess() {
+    this.toastr.success('Paciente criado com sucesso!');
+    this.onHide;
+  }
+
+  showMessageError(message) {
+    this.toastr.error(message);
   }
 
   onCancel() {

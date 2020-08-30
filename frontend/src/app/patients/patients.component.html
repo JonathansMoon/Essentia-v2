@@ -13,7 +13,7 @@
                 <button
                   href=""
                   class="btn btn-primary shadow"
-                  (click)="openModal(template)"
+                  (click)="openFormModal()"
                 >
                   Novo Cliente
                 </button>
@@ -50,15 +50,15 @@
                 <!-- <td>{{patient.birthDate}}</td>
                 <td>{{patient.lastAttendance}}</td> -->
                 <td>
-                  <a href="" class="btn btn-sm btn-primary">
+                  <button href="" class="btn btn-sm btn-info" (click)="[openViewModal(patient, templateView)]">
                     <i-bs name="eye-fill"></i-bs>
-                  </a>
-                  <a href="" class="btn btn-sm btn-success">
+                  </button>
+                  <button href="" class="btn btn-sm btn-primary" (click)="[childForm.onEdit(patient), openFormModal()]">
                     <i-bs name="pencil-fill"></i-bs>
-                  </a>
-                  <a href="" class="btn btn-sm btn-danger">
+                  </button>
+                  <button href="" class="btn btn-sm btn-danger">
                     <i-bs name="trash2-fill"></i-bs>
-                  </a>
+                  </button>
                 </td>
               </tr>
             </tbody>
@@ -69,6 +69,32 @@
   </div>
 </div>
 
-<ng-template #template>
-  <app-model-form [onHide]="modalRef"></app-model-form>
+<app-model-form [onHide]="modalRef" #childForm></app-model-form>
+
+<!--CONTEUDO DA JANELA MODAL VIEW -->
+<ng-template #templateView>
+  <div class="modal-header bg-primary">
+    <h5 class="modal-title text-white">Detalhes do Paciente</h5>
+    <button
+      type="button"
+      class="close pull-right"
+      aria-label="Close"
+      (click)="modalRef.hide()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <ul class="list-group">
+      <li class="list-group-item">Nome: {{initialState.name}}</li>
+      <li class="list-group-item">Email: {{initialState.email}}</li>
+      <li class="list-group-item">Sexo: {{initialState.gender}}</li>
+      <li class="list-group-item">Telefone: {{initialState.telephone}}</li>
+      <li class="list-group-item">Data de Nascimento: {{initialState.birthDate}}</li>
+      <li class="list-group-item">Data da última Visita: {{initialState.lastAttendance}}</li>
+    </ul>
+  </div>
 </ng-template>
+
+

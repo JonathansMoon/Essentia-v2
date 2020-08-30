@@ -5,7 +5,7 @@
     type="button"
     class="close pull-right"
     aria-label="Close"
-    (click)="onHide.hide()"
+    (click)="onHide"
   >
     <span aria-hidden="true">&times;</span>
   </button>
@@ -20,6 +20,7 @@
         id="name"
         class="form-control"
         placeholder="Seu nome"
+        name="name"
         formControlName="name"
         [ngClass]="isInvalid('name')"
       />
@@ -40,6 +41,7 @@
         type="email"
         class="form-control"
         placeholder="Seu email"
+        name="email"
         formControlName="email"
         [ngClass]="optionalInvalid('email') + ' ' + isInvalid('email')"
       />

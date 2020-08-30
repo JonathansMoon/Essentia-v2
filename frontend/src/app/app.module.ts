@@ -8,6 +8,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { PatientService } from './patients/patient.service';
 import { PatientsComponent } from './patients/patients.component';
 import { NgxBootstrapIconsModule } from 'ngx-bootstrap-icons';
+
 import {
   Alarm,
   AlarmFill,
@@ -18,6 +19,9 @@ import {
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
 import { ModelFormComponent } from './patients/model-form/model-form.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+import { ModalViewComponent } from './patients/modal-view/modal-view.component';
 
 const icons = {
   Alarm,
@@ -28,7 +32,7 @@ const icons = {
 };
 
 @NgModule({
-  declarations: [AppComponent, PatientsComponent, ModelFormComponent],
+  declarations: [AppComponent, PatientsComponent, ModelFormComponent, ModalViewComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -37,6 +41,8 @@ const icons = {
     ModalModule.forRoot(),
     ReactiveFormsModule,
     NgxMaskModule.forRoot(),
+    BrowserAnimationsModule, // required animations module
+    ToastrModule.forRoot(), // ToastrModule added
   ],
   providers: [HttpClient, PatientService],
   bootstrap: [AppComponent],

@@ -19,6 +19,10 @@ export class PatientService {
     return this.http.get<ResponsePatients>(this.url);
   }
 
+  getById(id) {
+    return this.http.get(`${this.url}/${id}`);
+  }
+
   createPatient(request: Patient): Observable<ResponseCreate> {
     return this.http.post<ResponseCreate>(this.url, request);
   }
