@@ -69,7 +69,10 @@
               "
               placeholder="Seu telefone"
             />
-            <div class="text-warning small" *ngIf="optionalInvalid('telephone')">
+            <div
+              class="text-warning small"
+              *ngIf="optionalInvalid('telephone')"
+            >
               O telefone é opcional, mas está vazio.
             </div>
             <div class="invalid-feedback" *ngIf="telephone.errors?.minlength">
@@ -84,10 +87,18 @@
         <div class="col">
           <div class="form-group">
             <label for="gender">Sexo</label>
-            <select class="form-control" name="gender" formControlName="gender">
+            <select
+              class="form-control"
+              name="gender"
+              formControlName="gender"
+              [ngClass]="optionalInvalid('gender') + ' ' + isInvalid('gender')"
+            >
               <option [value]="'M'">M</option>
               <option>F</option>
             </select>
+            <div class="invalid-feedback" *ngIf="gender.errors?.required">
+              Por favor informe o sexo valido.
+            </div>
           </div>
         </div>
       </div>
@@ -121,7 +132,10 @@
               [ngClass]="isInvalid('lastAttendance')"
               placeholder="Data da última visita"
             />
-            <div class="invalid-feedback" *ngIf="lastAttendance.errors?.required">
+            <div
+              class="invalid-feedback"
+              *ngIf="lastAttendance.errors?.required"
+            >
               Por favor informe uma data.
             </div>
           </div>
