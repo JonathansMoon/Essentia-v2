@@ -13,18 +13,19 @@ import { ToastrService } from 'ngx-toastr';
 import { DatePipe } from '@angular/common';
 
 @Component({
-  selector: 'app-model-form',
-  templateUrl: './model-form.component.html',
-  styleUrls: ['./model-form.component.css'],
+  selector: 'app-modal-form',
+  templateUrl: './modal-form.component.html',
+  styleUrls: ['./modal-form.component.css'],
   providers: [DatePipe],
 })
-export class ModelFormComponent implements OnInit {
+export class ModalFormComponent implements OnInit {
   form: FormGroup;
   submitted = false;
   messages: string;
   responsePatients: ResponsePatients;
   modalRef: BsModalRef;
   initialValue: any;
+  title: string;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -74,7 +75,7 @@ export class ModelFormComponent implements OnInit {
   }
 
   get gender() {
-    return this.form.get('email');
+    return this.form.get('gender');
   }
 
   get birthDate() {
@@ -89,11 +90,13 @@ export class ModelFormComponent implements OnInit {
   private templateFormTpl: TemplateRef<any>;
 
   openFormModal() {
+    this.title = 'Cadastrar paciente';
     this.form.reset();
     this.modalRef = this.modalService.show(this.templateFormTpl);
   }
 
   updateForm(patient) {
+    this.title = 'Editar paciente';
     this.modalRef = this.modalService.show(this.templateFormTpl);
 
     this.modalRef.content = this.form;
@@ -123,7 +126,7 @@ export class ModelFormComponent implements OnInit {
   optionalInvalid(field: string) {
     const fieldSet = this.form.get(field);
     if (
-      (fieldSet.dirty || fieldSet.touched) &&
+      (fieldSet.dirty || fieldSet.touched || this.submitted) &&
       (fieldSet.value === null || fieldSet.value === '')
     )
       return 'border border-warning';

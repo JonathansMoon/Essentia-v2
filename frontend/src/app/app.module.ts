@@ -19,7 +19,7 @@ import {
 } from 'ngx-bootstrap-icons';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
-import { ModelFormComponent } from './patients/model-form/model-form.component';
+import { ModalFormComponent } from './patients/modal-form/modal-form.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { ModalViewComponent } from './patients/modal-view/modal-view.component';
@@ -34,7 +34,13 @@ const icons = {
 };
 
 @NgModule({
-  declarations: [AppComponent, PatientsComponent, ModelFormComponent, ModalViewComponent, PhonePipe],
+  declarations: [
+    AppComponent,
+    PatientsComponent,
+    ModalFormComponent,
+    ModalViewComponent,
+    PhonePipe,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -45,7 +51,7 @@ const icons = {
     NgxMaskModule.forRoot(),
     BrowserAnimationsModule, // required animations module
     ToastrModule.forRoot(), // ToastrModule added
-    DataTablesModule
+    DataTablesModule,
   ],
   providers: [HttpClient, PatientService],
   bootstrap: [AppComponent],

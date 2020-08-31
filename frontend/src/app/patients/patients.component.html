@@ -35,10 +35,7 @@
             </thead>
             <tbody>
               <tr
-                *ngFor="
-                  let patient of responsePatients;
-                  let enumerate = index
-                "
+                *ngFor="let patient of responsePatients; let enumerate = index"
               >
                 <td>{{ enumerate + 1 }}</td>
                 <td>{{ patient.name }}</td>
@@ -46,10 +43,18 @@
                 <td>{{ patient.gender }}</td>
                 <td>{{ patient.telephone | phone }}</td>
                 <td>
-                  <button href="" class="btn btn-sm btn-info" (click)="[childView.openViewModal(patient)]">
+                  <button
+                    href=""
+                    class="btn btn-sm btn-info"
+                    (click)="[childView.openViewModal(patient)]"
+                  >
                     <i-bs name="eye-fill"></i-bs>
                   </button>
-                  <button href="" class="btn btn-sm btn-primary" (click)="[childForm.updateForm(patient)]">
+                  <button
+                    href=""
+                    class="btn btn-sm btn-primary"
+                    (click)="[childForm.updateForm(patient)]"
+                  >
                     <i-bs name="pencil-fill"></i-bs>
                   </button>
                 </td>
@@ -62,8 +67,6 @@
   </div>
 </div>
 
-<app-model-form #childForm></app-model-form>
+<app-modal-form #childForm></app-modal-form>
 
 <app-modal-view #childView></app-modal-view>
-
-
