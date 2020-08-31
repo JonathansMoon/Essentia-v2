@@ -22,7 +22,7 @@
           </div>
         </div>
         <div class="card-body">
-          <table *ngIf="responsePatients" class="table" id="myTable">
+          <table *ngIf="responsePatients" class="table" datatable id="myTable">
             <thead class="thead-dark">
               <tr>
                 <th>#</th>
@@ -36,7 +36,7 @@
             <tbody>
               <tr
                 *ngFor="
-                  let patient of responsePatients.data;
+                  let patient of responsePatients;
                   let enumerate = index
                 "
               >

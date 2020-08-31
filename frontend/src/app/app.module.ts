@@ -8,6 +8,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { PatientService } from './patients/patient.service';
 import { PatientsComponent } from './patients/patients.component';
 import { NgxBootstrapIconsModule } from 'ngx-bootstrap-icons';
+import { DataTablesModule } from 'angular-datatables';
 
 import {
   Alarm,
@@ -44,6 +45,7 @@ const icons = {
     NgxMaskModule.forRoot(),
     BrowserAnimationsModule, // required animations module
     ToastrModule.forRoot(), // ToastrModule added
+    DataTablesModule
   ],
   providers: [HttpClient, PatientService],
   bootstrap: [AppComponent],

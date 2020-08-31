@@ -21,7 +21,7 @@ class PatientController extends Controller
 
     public function index()
     {
-        $patient = $this->patient->paginate(10);
+        $patient = $this->patient->all();
         return response()->json($patient, 200);
     }
 
